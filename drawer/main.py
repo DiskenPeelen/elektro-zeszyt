@@ -10,8 +10,9 @@ def generate_img_1a(C=400):
     image.draw_line(Line((int(C+(C*0.1)),C),(int(C-(C*0.1)),C)), fill=[190,0,0])
     for deg in range(0, 360, 360//12):
         prevector = Vector.from_rotation((C,C), deg, int(C*0.95))
+        prevector = Vector.from_reversed(prevector)
+        prevector.scale(0.45)
         vector = Vector.from_reversed(prevector)
-        vector.scale(0.45)
         vector.round()
         image.draw_vector(vector)
     image.save('img/img_1a.png')
@@ -23,9 +24,8 @@ def generate_img_1b(C=400):
     image.draw_line(Line((int(C+(C*0.1)),C),(int(C-(C*0.1)),C)), fill=[0,0,190])
     for deg in range(0, 360, 360//12):
         prevector = Vector.from_rotation((C,C), deg, int(C*0.95))
-        prevector = Vector.from_reversed(prevector)
-        prevector.scale(0.45)
         vector = Vector.from_reversed(prevector)
+        vector.scale(0.45)
         vector.round()
         image.draw_vector(vector)
     image.save('img/img_1b.png')
