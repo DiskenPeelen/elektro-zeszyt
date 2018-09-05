@@ -126,7 +126,7 @@ def generate_img_5a(C=400):
     image.save('img/img_5a.png')
 
 def generate_img_5b(C=400):
-    '''Image "Symbol ogólny kondensatora"'''
+    '''Image "Symbol kondensatora regulowanego"'''
     image = Image((int(C*2), int(C*2)), line_width=6)
     image.draw_line(Line((int(C*5/6), int(C*0.5)),(int(C*5/6), int(C*1.5))))
     image.draw_line(Line((int(C*7/6), int(C*0.5)),(int(C*7/6), int(C*1.5))))
@@ -138,7 +138,7 @@ def generate_img_5b(C=400):
     image.save('img/img_5b.png')
 
 def generate_img_5c(C=400):
-    '''Image "Symbol ogólny kondensatora"'''
+    '''Image "Symbol kondensatora elektrolitycznego"'''
     image = Image((int(C*2), int(C*2)), line_width=6)
     image.draw_line(Line((int(C*5/6), int(C*0.5)),(int(C*5/6), int(C*1.5))))
     image.draw_line(Line((int(C*7/6), int(C*0.5)),(int(C*7/6), int(C*1.5))))
@@ -149,8 +149,40 @@ def generate_img_5c(C=400):
     image.draw_line(Line((int(C*8/6), int(C*1)),(int(C*7/4), int(C*1))))
     image.draw_point((int(C*1/4), int(C*1)), width=20, fill=[0,0,190])
     image.draw_point((int(C*7/4), int(C*1)), width=20, fill=[190,0,0])
-
     image.save('img/img_5c.png')
+
+def generate_img_8a(C=400):
+    '''Image "Węzeł z pięcioma prądami"'''
+    image = Image((int(C*2), int(C*2)), line_width=6, vector_arrow_size=30)
+    image.draw_point((C,C), width=20)
+    out_param_list = [
+        (0 , [190,0,0]),
+        (40, [190,0,0]),
+        (320, [190,0,0]),
+    ]
+    in_param_list = [
+        (140, [0,20,190]),
+        (180, [0,20,190]),
+        (220, [0,20,190]),
+    ]
+    for rotation, arrow_color in out_param_list:
+        vector = Vector.from_rotation((C,C), rotation, int(C*0.5))
+        vector2 = Vector.from_rotation((C,C), rotation, int(C*0.5))
+        vector2.scale(1.3)
+        line = Line.from_vector(vector2)
+        image.draw_line(line)
+        image.draw_vector(vector, arrow_color=arrow_color)
+    for rotation, arrow_color in in_param_list:
+        vector = Vector.from_rotation((C,C), rotation, int(C*0.5))
+        vector = Vector.from_reversed(vector)
+        vector.scale(1-(1/1.3))
+        vector2 = Vector.from_rotation((C,C), rotation, int(C*0.5))
+        vector2.scale(1.3)
+        line = Line.from_vector(vector2)
+        image.draw_line(line)
+        image.draw_vector(vector, arrow_color=arrow_color)
+    image.save('img/img_8a.png')
+
 
 if __name__ == '__main__':
     #generate_img_1a()
@@ -161,6 +193,7 @@ if __name__ == '__main__':
     #generate_img_5a()
     #generate_img_5b()
     #generate_img_5c()
+    generate_img_8a()
 
     # Templates
     # image.draw_vector(Vector((int(C*1), int(C*1)),(int(C*1), int(C*1))))

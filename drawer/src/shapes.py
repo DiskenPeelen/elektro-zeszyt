@@ -1,4 +1,5 @@
 from math import cos, sin, pi
+from src.vector import Vector2D as Vector
 
 class Line:
     '''Line'''
@@ -21,6 +22,19 @@ class Line:
         obj.pta = int(pta[0]), int(pta[1])
         obj.ptb = int(xdelta+pta[0]), int(ydelta+pta[1])
         return obj
+
+    @classmethod
+    def from_vector(cls, vector):
+        '''Create line, basing on instance of Vector class'''
+        obj = cls.__new__(cls)
+        obj.pta = vector.init_pt
+        obj.ptb = vector.term_pt
+        obj.to_ints()
+        return obj
+
+    def to_ints(self):
+        self.pta = int(self.pta[0]), int(self.pta[1])
+        self.ptb = int(self.ptb[0]), int(self.ptb[1])
 
     # Helper methods
 

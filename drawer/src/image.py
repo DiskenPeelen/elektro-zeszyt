@@ -84,18 +84,23 @@ class Image:
                     except IndexError: pass
 
 
-    def draw_vector(self, vector, fill=to_color([0,0,0]), width=None):
+    def draw_vector(self, vector, fill=to_color([0,0,0]), width=None,
+            arrow_color=None):
         '''Draw a vector'''
         if width == None: width = self.linew
+        if arrow_color == None: arrow_color = fill
+        else: arrow_color = to_color(arrow_color)
         arrow_angle = 180-35 # angle between vector and arrow arm [degs]
         ipt, tpt, angle = vector.init_pt, vector.term_pt, vector.angle
         alen = self.vector_arrow_size
         if self.vector_arrow_relative:
             alen *= vector.magnitude
         base_angle = vector.angle + 90
-        self.draw_line(Line(ipt, tpt))
-        self.draw_line(Line.from_rotation(tpt, base_angle+arrow_angle, alen))
-        self.draw_line(Line.from_rotation(tpt, base_angle-arrow_angle, alen))
+        self.draw_line(Line.from_vector(vector), fill=fill, width=width)
+        self.draw_line(Line.from_rotation(tpt, base_angle+arrow_angle, alen),
+            fill=arrow_color, width=width)
+        self.draw_line(Line.from_rotation(tpt, base_angle-arrow_angle, alen),
+            fill=arrow_color, width=width)
 
 
     @staticmethod
